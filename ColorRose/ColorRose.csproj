@@ -155,6 +155,12 @@
       <Version>6.2.2</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ColorRoseLib\ColorRoseLib.csproj">
+      <Project>{6e06c5df-f1d0-464c-b57d-422a7ffbee51}</Project>
+      <Name>ColorRoseLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
