@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -16,20 +14,18 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ColorRoseLib;
 
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-namespace ColorRose
+namespace ColorRose.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
-    {
+    public sealed partial class ColorHSB : Page
+    { 
+        private ColorRoseLib.ColorHSB Color;
 
-        private ColorHSB Color;
-
-        public MainPage()
+        public ColorHSB()
         {
             this.InitializeComponent();
         }
@@ -44,12 +40,12 @@ namespace ColorRose
             BrgValueBox.Text = ((int)BrgSlider.Value).ToString();
 
             RefreshWheel();
-            
+
         }
 
         private void RefreshWheel()
         {
-            Color = new ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
+            Color = new ColorRoseLib.ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
             ColorWheel.Fill = new SolidColorBrush(Color.RGBUI);
             HexCodeBlox.Text = Color.RGBHexCode;
         }
@@ -78,14 +74,14 @@ namespace ColorRose
             {
                 string str = HueValueBox.Text.Replace("º", "");
                 int v = int.Parse(str);
-                if(v >= 0 && v <= 360)
+                if (v >= 0 && v <= 360)
                 {
                     double val = double.Parse(str);
                     HueSlider.Value = val;
                     HueValueBox.Text = str + "º";
                 }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 HueValueBox.Text = Color.RGB.GetHue().ToString() + "º";
             }
@@ -96,13 +92,13 @@ namespace ColorRose
             try
             {
                 int v = int.Parse(SatValueBox.Text);
-                if(v >= 0 && v <= 100)
+                if (v >= 0 && v <= 100)
                 {
                     double val = double.Parse(SatValueBox.Text);
                     SatSlider.Value = val;
                 }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 SatValueBox.Text = Color.RGB.GetSaturation().ToString();
             }
@@ -113,7 +109,7 @@ namespace ColorRose
             try
             {
                 int v = int.Parse(BrgValueBox.Text);
-                if(v >= 0 && v <= 100)
+                if (v >= 0 && v <= 100)
                 {
                     double val = double.Parse(BrgValueBox.Text);
                     BrgSlider.Value = val;
