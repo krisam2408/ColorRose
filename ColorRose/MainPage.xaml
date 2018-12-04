@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="ColorRose.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ColorRose"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    FontSize="20">
+
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal">
+            <RelativePanel>
+                <Button Name="HamburguerButton" 
+                        Click="HamburguerButton_Click" />
+            </RelativePanel>
+            <SplitView Name="SplitDiv" OpenPaneLength="200" CompactPaneLength="56">
+                <ListBox Name="CmdList" SelectionMode="Single"
+                         SelectionChanged="CmdList_SelectionChanged">
+                    <ListBoxItem>
+                        <TextBlock Text="Color HSB" />
+                    </ListBoxItem>
+                </ListBox>
+            </SplitView>
+        </StackPanel>
+        <Frame Name="WindowFrame">
+            
+        </Frame>
+    </StackPanel>
+</Page>

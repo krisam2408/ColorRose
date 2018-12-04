@@ -21,11 +21,11 @@ namespace ColorRose.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ColorHSB : Page
-    { 
-        private ColorRoseLib.ColorHSB Color;
+    public sealed partial class ColorHSBPage : Page
+    {
+        private ColorHSB Color;
 
-        public ColorHSB()
+        public ColorHSBPage()
         {
             this.InitializeComponent();
         }
@@ -45,7 +45,7 @@ namespace ColorRose.Views
 
         private void RefreshWheel()
         {
-            Color = new ColorRoseLib.ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
+            Color = new ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
             ColorWheel.Fill = new SolidColorBrush(Color.RGBUI);
             HexCodeBlox.Text = Color.RGBHexCode;
         }
@@ -122,3 +122,4 @@ namespace ColorRose.Views
         }
     }
 }
+
