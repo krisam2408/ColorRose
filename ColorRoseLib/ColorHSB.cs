@@ -254,15 +254,12 @@ namespace ColorRoseLib
 
             byte brgByte = (byte)(255 * Brightness / 100);
             byte satByte = (byte)(255 * (100 - Saturation) / 100);
+            if (satByte > brgByte) satByte = brgByte;
+
 
             for (byte i = 0; i < 3; i++)
             {
-                if(cha[i] < brgByte)
-                {
-                    if (satByte > brgByte) satByte = brgByte;
-                    cha[i] += satByte;
-                }
-                
+                if(cha[i] < satByte) cha[i] = satByte;
             }
             
 
