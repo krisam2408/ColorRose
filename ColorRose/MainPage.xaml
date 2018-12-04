@@ -15,11 +15,15 @@
                 <Button Name="HamburguerButton" 
                         Click="HamburguerButton_Click" />
             </RelativePanel>
-            <SplitView Name="SplitDiv" OpenPaneLength="200" CompactPaneLength="56">
+            <SplitView Name="SplitDiv" OpenPaneLength="200" CompactPaneLength="56"
+                       DisplayMode="CompactOverlay">
                 <ListBox Name="CmdList" SelectionMode="Single"
                          SelectionChanged="CmdList_SelectionChanged">
                     <ListBoxItem>
                         <TextBlock Text="Color HSB" />
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <TextBlock Text="Color RGB" />
                     </ListBoxItem>
                 </ListBox>
             </SplitView>

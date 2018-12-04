@@ -28,9 +28,18 @@ namespace ColorRose.Views
         public ColorHSBPage()
         {
             this.InitializeComponent();
+            this.Color = new ColorHSB(MainPage.Color);
         }
 
-        private void PageLoaded(object sender, RoutedEventArgs e)
+        private void RefreshWheel()
+        {
+            Color = new ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
+            ColorWheel.Fill = new SolidColorBrush(Color.RGBUI);
+            HexCodeBlox.Text = Color.RGBHexCode;
+            MainPage.Color = this.Color.RGB;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             HueSlider.Value = 60;
             SatSlider.Value = 100;
@@ -40,35 +49,27 @@ namespace ColorRose.Views
             BrgValueBox.Text = ((int)BrgSlider.Value).ToString();
 
             RefreshWheel();
-
         }
 
-        private void RefreshWheel()
-        {
-            Color = new ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
-            ColorWheel.Fill = new SolidColorBrush(Color.RGBUI);
-            HexCodeBlox.Text = Color.RGBHexCode;
-        }
-
-        private void HueSliderFunction(object sender, RangeBaseValueChangedEventArgs e)
+        private void HueSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             HueValueBox.Text = ((float)HueSlider.Value).ToString() + "º";
             RefreshWheel();
         }
 
-        private void SatSliderFunction(object sender, RangeBaseValueChangedEventArgs e)
+        private void SatSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             SatValueBox.Text = ((int)SatSlider.Value).ToString();
             RefreshWheel();
         }
 
-        private void BrgSliderFunction(object sender, RangeBaseValueChangedEventArgs e)
+        private void BrgSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             BrgValueBox.Text = ((int)BrgSlider.Value).ToString();
             RefreshWheel();
         }
 
-        private void HueBoxFunction(object sender, TextChangedEventArgs e)
+        private void HueValueBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -87,7 +88,7 @@ namespace ColorRose.Views
             }
         }
 
-        private void SatBoxFunction(object sender, TextChangedEventArgs e)
+        private void SatValueBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace ColorRose.Views
             }
         }
 
-        private void BrgBoxFunction(object sender, TextChangedEventArgs e)
+        private void BrgValueBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -120,6 +121,6 @@ namespace ColorRose.Views
                 BrgValueBox.Text = Color.RGB.GetSaturation().ToString();
             }
         }
+
     }
 }
-

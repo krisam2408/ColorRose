@@ -27,7 +27,7 @@ namespace ColorRose
     public sealed partial class MainPage : Page
     {
 
-
+        public static Color Color;
 
         public MainPage()
         {
@@ -35,9 +35,14 @@ namespace ColorRose
             WindowFrame.Navigate(typeof(ColorHSBPage));
         }
 
+        public static string ColorHexCode()
+        {
+            return string.Format("#{0}{1}{2}", Color.R.ToString("x2"), Color.G.ToString("x2"), Color.B.ToString("x2"));
+        }
+
         private void HamburguerButton_ContextCanceled(UIElement sender, RoutedEventArgs args)
         {
-
+            SplitDiv.IsPaneOpen = !SplitDiv.IsPaneOpen;
         }
 
         private void HamburguerButton_Click(object sender, RoutedEventArgs e)

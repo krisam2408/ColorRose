@@ -126,6 +126,9 @@
     <Compile Include="Views\ColorHSBPage.xaml.cs">
       <DependentUpon>ColorHSBPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ColorRGBPage.xaml.cs">
+      <DependentUpon>ColorRGBPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -153,6 +156,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ColorHSBPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ColorRGBPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
