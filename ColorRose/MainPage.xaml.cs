@@ -28,31 +28,39 @@ namespace ColorRose
     {
 
         public static Color Color;
+        public static string ColorHexCode
+        {
+            get
+            {
+                return string.Format("#{0}{1}{2}", Color.R.ToString("x2"), Color.G.ToString("x2"), Color.B.ToString("x2"));
+            }
+        }
 
         public MainPage()
         {
             this.InitializeComponent();
+            Color = Color.Cyan;
             WindowFrame.Navigate(typeof(ColorHSBPage));
-        }
-
-        public static string ColorHexCode()
-        {
-            return string.Format("#{0}{1}{2}", Color.R.ToString("x2"), Color.G.ToString("x2"), Color.B.ToString("x2"));
-        }
-
-        private void HamburguerButton_ContextCanceled(UIElement sender, RoutedEventArgs args)
-        {
-            SplitDiv.IsPaneOpen = !SplitDiv.IsPaneOpen;
         }
 
         private void HamburguerButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SplitDiv.IsPaneOpen = !SplitDiv.IsPaneOpen;
         }
 
         private void CmdList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            int index = CmdList.SelectedIndex;
+            switch(index)
+            {
+                case 1:
+                    WindowFrame.Navigate(typeof(ColorRGBPage));
+                    break;
+                default:
+                    WindowFrame.Navigate(typeof(ColorHSBPage));
+                    break;
+            }
         }
+
     }
 }

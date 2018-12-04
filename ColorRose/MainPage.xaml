@@ -9,27 +9,48 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
     FontSize="20">
 
-    <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Horizontal">
-            <RelativePanel>
-                <Button Name="HamburguerButton" 
-                        Click="HamburguerButton_Click" />
-            </RelativePanel>
-            <SplitView Name="SplitDiv" OpenPaneLength="200" CompactPaneLength="56"
-                       DisplayMode="CompactOverlay">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <RelativePanel Grid.Row="0">
+            <Button Name="HamburguerButton" 
+                Click="HamburguerButton_Click"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE700;"
+                FontSize="52" Width="77"/>
+        </RelativePanel>
+        <SplitView Name="SplitDiv" OpenPaneLength="270" CompactPaneLength="77"
+            DisplayMode="CompactOverlay" HorizontalAlignment="Left"
+            Grid.Row="1">
+            <SplitView.Pane>
                 <ListBox Name="CmdList" SelectionMode="Single"
-                         SelectionChanged="CmdList_SelectionChanged">
+                    SelectionChanged="CmdList_SelectionChanged">
                     <ListBoxItem>
-                        <TextBlock Text="Color HSB" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" 
+                                Text="&#xE1D2;" FontSize="52"
+                                Margin="3, 0, 20, 0"/>
+                            <TextBlock Text="Color HSB" FontSize="36"/>
+                        </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem>
-                        <TextBlock Text="Color RGB" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" 
+                                Text="&#xE958;" FontSize="52"
+                                Margin="3, 0, 20, 0"/>
+                            <TextBlock Text="Color RGB" FontSize="36"/>
+                        </StackPanel>
                     </ListBoxItem>
                 </ListBox>
-            </SplitView>
-        </StackPanel>
-        <Frame Name="WindowFrame">
-            
-        </Frame>
-    </StackPanel>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Frame Name="WindowFrame">
+
+                </Frame>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+        
 </Page>

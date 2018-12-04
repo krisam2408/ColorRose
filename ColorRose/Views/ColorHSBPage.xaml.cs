@@ -28,22 +28,24 @@ namespace ColorRose.Views
         public ColorHSBPage()
         {
             this.InitializeComponent();
-            this.Color = new ColorHSB(MainPage.Color);
+            
         }
 
         private void RefreshWheel()
         {
             Color = new ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
             ColorWheel.Fill = new SolidColorBrush(Color.RGBUI);
-            HexCodeBlox.Text = Color.RGBHexCode;
             MainPage.Color = this.Color.RGB;
+            HexCodeBlox.Text = MainPage.ColorHexCode;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            HueSlider.Value = 60;
-            SatSlider.Value = 100;
-            BrgSlider.Value = 100;
+            this.Color = new ColorHSB(MainPage.Color);
+
+            HueSlider.Value = Color.Hue;
+            SatSlider.Value = Color.Saturation;
+            BrgSlider.Value = Color.Brightness;
             HueValueBox.Text = ((float)HueSlider.Value).ToString() + "º";
             SatValueBox.Text = ((int)SatSlider.Value).ToString();
             BrgValueBox.Text = ((int)BrgSlider.Value).ToString();
