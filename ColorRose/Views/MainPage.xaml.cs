@@ -27,5 +27,15 @@ namespace ColorRose.Views
             this.InitializeComponent();
             MainFrame.Navigate(typeof(ColorHSB));
         }
+
+        private void HamburgerFunction(object sender, RoutedEventArgs e)
+        {
+            SplitDiv.IsPaneOpen = !SplitDiv.IsPaneOpen;
+        }
+
+        private void CmdSelectionFunction(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

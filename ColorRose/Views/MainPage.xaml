@@ -15,15 +15,36 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <RelativePanel>
-                <Button Name="HamburgerButton" />
+                <Button Name="HamburgerButton" Content="Hamburguer"
+                        FontSize="36" Click="HamburgerFunction" />
             </RelativePanel>
-            <SplitView Grid.Row="1">
-                <ListBox>
-                    <ListBoxItem />
-                    <ListBoxItem />
-                    <ListBoxItem />
-                    <ListBoxItem />
-                    <ListBoxItem />
+            <SplitView Name="SplitDiv" Grid.Row="1" DisplayMode="CompactOverlay" OpenPaneLength="200"
+                       CompactPaneLength="56" HorizontalAlignment="Left">
+                <ListBox SelectionMode="Single" Name="CmdList" SelectionChanged="CmdSelectionFunction">
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xECCB;" />-->
+                            <TextBlock Text="Color HSB" FontSize="36" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xEC26;" />-->
+                            <TextBlock Text="Color RGB" FontSize="36" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE152;" />-->
+                            <TextBlock Text="Palette" FontSize="36" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE713;" />-->
+                            <TextBlock Text="Settings" FontSize="36" />
+                        </StackPanel>
+                    </ListBoxItem>
                 </ListBox>
             </SplitView>
         </Grid>
