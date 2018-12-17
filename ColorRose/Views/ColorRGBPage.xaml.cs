@@ -34,9 +34,9 @@ namespace ColorRose.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            RedSlider.Value = MainPage.Color.R;
-            GreenSlider.Value = MainPage.Color.G;
-            BlueSlider.Value = MainPage.Color.B;
+            RedSlider.Value = MainPage.GlobalColor.R;
+            GreenSlider.Value = MainPage.GlobalColor.G;
+            BlueSlider.Value = MainPage.GlobalColor.B;
         }
 
         private void RedValueBox_TextChanged(object sender, TextChangedEventArgs e)

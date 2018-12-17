@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using ColorRoseLib;
+using ColorRose.Lib;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,7 +23,8 @@ namespace ColorRose.Views
     /// </summary>
     public sealed partial class ColorHSBPage : Page
     {
-        private ColorHSB Color;
+        private ColorHSB HSBColor;
+        private bool loaded;
 
         public ColorHSBPage()
         {
@@ -33,22 +34,31 @@ namespace ColorRose.Views
 
         private void RefreshWheel()
         {
-            Color = new ColorHSB((int)HueSlider.Value, (int)SatSlider.Value, (int)BrgSlider.Value);
-            ColorWheel.Fill = new SolidColorBrush(Color.RGBUI);
-            MainPage.Color = this.Color.RGB;
-            HexCodeBlox.Text = MainPage.ColorHexCode;
+            if(loaded)
+            {
+                HSBColor.Hue = (int)HueSlider.Value;
+                HSBColor.Saturation = (byte)SatSlider.Value;
+                HSBColor.Brightness = (byte)BrgSlider.Value;
+                ColorWheel.Fill = new SolidColorBrush(HSBColor.ColorRGB);
+                MainPage.GlobalColor = this.HSBColor.ColorRGB;
+                HexCodeBlox.Text = MainPage.ColorHexCode;
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Color = new ColorHSB(MainPage.Color);
+            loaded = false;
+            ColorHSB temp = new ColorHSB(MainPage.GlobalColor);
 
-            HueSlider.Value = Color.Hue;
-            SatSlider.Value = Color.Saturation;
-            BrgSlider.Value = Color.Brightness;
-            HueValueBox.Text = ((float)HueSlider.Value).ToString() + "º";
+            HueSlider.Value = temp.Hue;
+            SatSlider.Value = temp.Saturation;
+            BrgSlider.Value = temp.Brightness;
+            HueValueBox.Text = ((int)HueSlider.Value).ToString() + "º";
             SatValueBox.Text = ((int)SatSlider.Value).ToString();
             BrgValueBox.Text = ((int)BrgSlider.Value).ToString();
+
+            HSBColor = temp;
+            loaded = true;
 
             RefreshWheel();
         }
@@ -86,7 +96,7 @@ namespace ColorRose.Views
             }
             catch (FormatException)
             {
-                HueValueBox.Text = Color.RGB.GetHue().ToString() + "º";
+                HueValueBox.Text = new ColorHSB(MainPage.GlobalColor).Hue + "º";
             }
         }
 
@@ -103,7 +113,7 @@ namespace ColorRose.Views
             }
             catch (FormatException)
             {
-                SatValueBox.Text = Color.RGB.GetSaturation().ToString();
+                SatValueBox.Text = new ColorHSB(MainPage.GlobalColor).Saturation.ToString();
             }
         }
 
@@ -120,7 +130,7 @@ namespace ColorRose.Views
             }
             catch (FormatException)
             {
-                BrgValueBox.Text = Color.RGB.GetSaturation().ToString();
+                BrgValueBox.Text = new ColorHSB(MainPage.GlobalColor).Brightness.ToString();
             }
         }
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,20 +27,18 @@ namespace ColorRose
     public sealed partial class MainPage : Page
     {
 
-        public static Color Color;
+        public static Color GlobalColor;
         public static string ColorHexCode
         {
             get
             {
-                return string.Format("#{0}{1}{2}", Color.R.ToString("x2"), Color.G.ToString("x2"), Color.B.ToString("x2"));
+                return string.Format("#{0}{1}{2}", GlobalColor.R.ToString("x2"), GlobalColor.G.ToString("x2"), GlobalColor.B.ToString("x2"));
             }
         }
 
         public MainPage()
         {
             this.InitializeComponent();
-            Color = Color.Cyan;
-            WindowFrame.Navigate(typeof(ColorHSBPage));
         }
 
         private void HamburguerButton_Click(object sender, RoutedEventArgs e)
@@ -62,5 +60,16 @@ namespace ColorRose
             }
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            GlobalColor = new Color
+            {
+                R = 255,
+                G = 0,
+                B = 100,
+                A = 255
+            };
+            WindowFrame.Navigate(typeof(ColorHSBPage));
+        }
     }
 }
