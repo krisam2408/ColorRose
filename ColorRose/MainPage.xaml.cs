@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ColorRose.Views;
+using ColorRose.Lib;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -28,6 +29,7 @@ namespace ColorRose
     {
 
         public static Color GlobalColor;
+        public static HarmoniesType HarmonyOption;
         public static string ColorHexCode
         {
             get
@@ -54,6 +56,9 @@ namespace ColorRose
                 case 1:
                     WindowFrame.Navigate(typeof(ColorRGBPage));
                     break;
+                case 2:
+                    WindowFrame.Navigate(typeof(Harmonies));
+                    break;
                 default:
                     WindowFrame.Navigate(typeof(ColorHSBPage));
                     break;
@@ -69,6 +74,7 @@ namespace ColorRose
                 B = 100,
                 A = 255
             };
+            HarmonyOption = HarmoniesType.Monochromatic;
             WindowFrame.Navigate(typeof(ColorHSBPage));
         }
     }

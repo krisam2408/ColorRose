@@ -209,8 +209,11 @@ namespace ColorRose.Lib
                 thirdOrder[0] = 3;
             }
 
-            Brightness = (byte)(cMax / 255 * 100);
-            Saturation = (byte)(100 - (cMin / 255 * 100));
+            double brg = (double)cMax / 255 * 100;
+            double sat = 100 - ((double)cMin / 255 * 100);
+
+            Brightness = (byte)brg;
+            Saturation = (byte)sat;
             Hue = (int)(thirdOrder[0] * 120 + rel * 60 * abs);
             Alpha = color.A;
         }

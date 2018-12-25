@@ -53,7 +53,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel
-            Padding="95, 50, 95, 40">
+            Padding="20, 50, 20, 40">
             <!--Color Wheel-->
             <Rectangle Name="ColorWheel" Width="300" Height="300" Fill="White" />
             <TextBox Name="HexCodeBlox" Background="White"

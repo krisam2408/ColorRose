@@ -14,7 +14,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <RelativePanel Grid.Row="0">
+        <RelativePanel Grid.Row="0"
+                       HorizontalAlignment="Left">
             <Button Name="HamburguerButton" 
                 Click="HamburguerButton_Click"
                 FontFamily="Segoe MDL2 Assets"
@@ -41,6 +42,14 @@
                                 Text="&#xE958;" FontSize="52"
                                 Margin="3, 0, 20, 0"/>
                             <TextBlock Text="Color RGB" FontSize="36"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" 
+                                Text="&#xF22C;" FontSize="52"
+                                Margin="3, 0, 20, 0"/>
+                            <TextBlock Text="Harmonies" FontSize="36"/>
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>

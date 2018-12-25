@@ -24,7 +24,7 @@ namespace ColorRose.Views
     public sealed partial class ColorHSBPage : Page
     {
         private ColorHSB HSBColor;
-        private bool loaded;
+        private bool isLoaded;
 
         public ColorHSBPage()
         {
@@ -34,7 +34,7 @@ namespace ColorRose.Views
 
         private void RefreshWheel()
         {
-            if(loaded)
+            if(isLoaded)
             {
                 HSBColor.Hue = (int)HueSlider.Value;
                 HSBColor.Saturation = (byte)SatSlider.Value;
@@ -47,7 +47,7 @@ namespace ColorRose.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            loaded = false;
+            isLoaded = false;
             ColorHSB temp = new ColorHSB(MainPage.GlobalColor);
 
             HueSlider.Value = temp.Hue;
@@ -58,7 +58,7 @@ namespace ColorRose.Views
             BrgValueBox.Text = ((int)BrgSlider.Value).ToString();
 
             HSBColor = temp;
-            loaded = true;
+            isLoaded = true;
 
             RefreshWheel();
         }
