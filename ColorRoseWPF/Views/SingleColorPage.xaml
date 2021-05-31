@@ -1,0 +1,27 @@
+﻿<Page x:Class="ColorRoseWPF.Views.SingleColorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ColorRoseWPF.Views"
+      mc:Ignorable="d" 
+      DataContext="{Binding Terminal, Source={StaticResource Locator}}"
+      Title="SingleColorPage">
+
+    <Grid Margin="8" DataContext="{Binding SingleColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Ellipse Fill="DarkViolet" Width="256" Height="256" StrokeThickness="4" Stroke="White" />
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <TextBlock Text="Hue" />
+            <Slider Minimum="0" Maximum="360" />
+            <TextBlock Text="Saturation" />
+            <Slider Minimum="0" Maximum="100" />
+            <TextBlock Text="Brightness" />
+            <Slider Minimum="0" Maximum="100" />
+        </StackPanel>
+
+    </Grid>
+</Page>

@@ -1,0 +1,26 @@
+﻿<Page x:Class="ColorRoseWPF.Views.NavigationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:ColorRoseWPF.Views"
+      xmlns:core="clr-namespace:ColorRoseWPF.Core"
+      mc:Ignorable="d" 
+      DataContext="{Binding Terminal, Source={StaticResource Locator}}">
+
+    <StackPanel Orientation="Vertical" DataContext="{Binding Navigation}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Background="Transparent" core:MouseBehaviour.MouseUpCommand="{Binding AppMoveUpCommand}" core:MouseBehaviour.MouseDownCommand="{Binding AppMoveDownCommand}" core:MouseBehaviour.MouseDragCommand="{Binding AppMoveDragCommand}" core:MouseBehaviour.MouseLeaveCommand="{Binding AppMoveLeaveCommand}" />
+            <Button Content="®" Grid.Column="1" Style="{StaticResource WindowButton}" Command="{Binding AppMinimizeCommand}" />
+            <Button Content="{Binding MaximizeButtonIcon}" Grid.Column="2" Style="{StaticResource WindowButton}" Command="{Binding AppMaximizeCommand}" />
+            <Button Content="Ó" Grid.Column="3" Style="{StaticResource WindowButton}" Command="{Binding AppCloseCommand}" />
+        </Grid>
+        <ListView ItemsSource="{Binding NavDestinations}" SelectedItem="{Binding Destination}" Style="{StaticResource NavigationMenu}" />
+    </StackPanel>
+</Page>
