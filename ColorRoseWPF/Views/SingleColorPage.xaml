@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ColorRoseWPF.Views"
       xmlns:core="clr-namespace:ColorRoseWPF.Core"
+      xmlns:controls="clr-namespace:ColorRoseWPF.Views.Controls"
       mc:Ignorable="d" 
       DataContext="{Binding Terminal, Source={StaticResource Locator}}"
       Title="SingleColorPage">
@@ -23,14 +24,10 @@
             <Ellipse Fill="{Binding SampleColor}" StrokeThickness="4" Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding SampleHeight}" Height="{Binding SampleHeight}" Canvas.Left="{Binding SampleLeftMargin}" Canvas.Top="{Binding SampleTopMargin}" />
         </Canvas>
         <StackPanel Grid.Column="1" Orientation="Vertical">
-            <TextBlock Text="Hue" />
-            <Slider Minimum="{Binding HueMinValue}" Maximum="{Binding HueMaxValue}" Value="{Binding Hue}" />
-            <TextBlock Text="Saturation" />
-            <Slider Minimum="{Binding SaturationMinValue}" Maximum="{Binding SaturationMaxValue}" Value="{Binding Saturation}" />
-            <TextBlock Text="Brightness" />
-            <Slider Minimum="{Binding BrightnessMinValue}" Maximum="{Binding BrightnessMaxValue}" Value="{Binding Brightness}" />
-            <TextBlock Text="Alpha" />
-            <Slider Minimum="{Binding AlphaMinValue}" Maximum="{Binding AlphaMaxValue}" Value="{Binding Alpha}" />
+            <controls:ColorControl DataContext="{Binding Hue}" />
+            <controls:ColorControl DataContext="{Binding Saturation}" />
+            <controls:ColorControl DataContext="{Binding Brightness}" />
+            <controls:ColorControl DataContext="{Binding Alpha}" />
         </StackPanel>
 
     </Grid>

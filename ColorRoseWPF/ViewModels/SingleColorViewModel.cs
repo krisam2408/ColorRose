@@ -7,14 +7,21 @@ using System.Windows.Input;
 using ColorRoseWPF.Core;
 using System.Windows;
 using System.Windows.Controls;
+using System;
 
 namespace ColorRoseWPF.ViewModels
 {
     public class SingleColorViewModel:BaseViewModel,INavegable
     {
-        private HSBColor sampleColor;
+        private HSBColor SourceColor
+        {
+            get
+            {
+                return new HSBColor(Hue.Value, (byte)Saturation.Value, (byte)Brightness.Value, (byte)Alpha.Value);
+            }
+        }
 
-        public Brush SampleColor { get { return new SolidColorBrush(sampleColor.ToARGBColor().ToMediaColor()); } }
+        public Brush SampleColor { get { return new SolidColorBrush(SourceColor.ToARGBColor().ToMediaColor()); } }
 
         private double sampleHeight;
         public double SampleHeight { get { return sampleHeight; } set { SetValue(ref sampleHeight, value); } }
@@ -25,81 +32,73 @@ namespace ColorRoseWPF.ViewModels
         private double sampleTopMargin;
         public double SampleTopMargin { get { return sampleTopMargin; } set { SetValue(ref sampleTopMargin, value); } }
 
-        private int hue;
-        public int Hue
+        private ColorControl hue;
+        public ColorControl Hue
         {
             get { return hue; }
-            set
-            {
-                if(SetValue(ref hue, value))
-                {
-                    sampleColor.Hue = value;
-                    NotifyPropertyChanged(nameof(SampleColor));
-                }
-            }
+            set { SetValue(ref hue, value); }
         }
 
-        private int saturation;
-        public int Saturation
+        private ColorControl saturation;
+        public ColorControl Saturation
         {
             get { return saturation; }
-            set
-            {
-                if (SetValue(ref saturation, value))
-                {
-                    sampleColor.Saturation = (byte)value;
-                    NotifyPropertyChanged(nameof(SampleColor));
-                }
-            }
+            set { SetValue(ref saturation, value); }
         }
 
-        private int brightness;
-        public int Brightness
+        private ColorControl brightness;
+        public ColorControl Brightness
         {
             get { return brightness; }
-            set
-            {
-                if (SetValue(ref brightness, value))
-                {
-                    sampleColor.Brightness = (byte)value;
-                    NotifyPropertyChanged(nameof(SampleColor));
-                }
-            }
+            set { SetValue(ref brightness, value); }
         }
 
-        private int alpha;
-        public int Alpha
+        private ColorControl alpha;
+        public ColorControl Alpha
         {
             get { return alpha; }
-            set
-            {
-                if (SetValue(ref alpha, value))
-                {
-                    sampleColor.Alpha = (byte)value;
-                    NotifyPropertyChanged(nameof(SampleColor));
-                }
-            }
+            set { SetValue(ref alpha, value); }
         }
-
-        public int HueMaxValue { get { return HSBColor.MaxHue; } }
-        public int HueMinValue { get { return HSBColor.MinHue; } }
-        public int SaturationMaxValue { get { return HSBColor.MaxSaturation; } }
-        public int SaturationMinValue { get { return HSBColor.MinSaturation; } }
-        public int BrightnessMaxValue { get { return HSBColor.MaxBrightness; } }
-        public int BrightnessMinValue { get { return HSBColor.MinBrightness; } }
-        public int AlphaMaxValue { get { return HSBColor.MaxAlpha; } }
-        public int AlphaMinValue { get { return HSBColor.MinAlpha; } }
 
         public ICommand LoadedCommand { get { return new RelayCommand(e => Loaded((RoutedEventArgs)e)); } }
 
-        public SingleColorViewModel()
+        public SingleColorViewModel(HSBColor startingColor)
         {
-            sampleColor = HSBColor.Purple;
-            Hue = sampleColor.Hue;
-            Saturation = sampleColor.Saturation;
-            Brightness = sampleColor.Brightness;
-            Alpha = sampleColor.Alpha;
+            Initialize(startingColor);
             NotifyPropertyChanged(nameof(SampleColor));
+        }
+
+        private void Initialize(HSBColor startingColor)
+        {
+            Hue = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            {
+                Name = "Hue",
+                MinValue = HSBColor.MinHue,
+                MaxValue = HSBColor.MaxHue,
+                Value = startingColor.Hue
+            };
+            Saturation = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            {
+                Name = "Saturation",
+                MinValue = HSBColor.MinSaturation,
+                MaxValue = HSBColor.MaxSaturation,
+                Value = startingColor.Saturation
+            };
+            Brightness = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            {
+                Name = "Brightness",
+                MinValue = HSBColor.MinBrightness,
+                MaxValue = HSBColor.MaxBrightness,
+                Value = startingColor.Brightness
+            };
+            Alpha = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            {
+                Name = "Alpha",
+                MinValue = HSBColor.MinAlpha,
+                MaxValue = HSBColor.MaxAlpha,
+                Value = startingColor.Alpha
+            };
+
         }
 
         private void Loaded(RoutedEventArgs e)

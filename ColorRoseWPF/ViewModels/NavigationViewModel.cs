@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using MouseAction = ColorRoseWPF.Core.MouseAction;
+using ColorRoseLib;
 
 namespace ColorRoseWPF.ViewModels
 {
@@ -54,7 +55,9 @@ namespace ColorRoseWPF.ViewModels
             switch (Destination.Key)
             {
                 case 0:
-                    Terminal.Instance.SingleColor = new();
+                    HSBColor startingColor = HSBColor.Purple;
+                    startingColor.Darken(30);
+                    Terminal.Instance.SingleColor = new(startingColor);
                     break;
                 case 1:
                     MessageBox.Show("I'm not working");
