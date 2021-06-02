@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ColorRoseWPF.Views"
+      xmlns:core="clr-namespace:ColorRoseWPF.Core"
       mc:Ignorable="d" 
       DataContext="{Binding Terminal, Source={StaticResource Locator}}"
       Title="SingleColorPage">
@@ -13,14 +14,23 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Ellipse Fill="DarkViolet" Width="256" Height="256" StrokeThickness="4" Stroke="White" />
+        <Canvas Grid.Column="0" core:LayoutBehaviour.LoadedCommand="{Binding LoadedCommand}" core:LayoutBehaviour.ResizeCommand="{Binding LoadedCommand}">
+            <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding SampleHeight}" Height="{Binding SampleHeight}" Canvas.Left="{Binding SampleLeftMargin}" Canvas.Top="{Binding SampleTopMargin}">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="/Content/Images/checkerboard.png" />
+                    </Ellipse.Fill>
+                </Ellipse>
+            <Ellipse Fill="{Binding SampleColor}" StrokeThickness="4" Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding SampleHeight}" Height="{Binding SampleHeight}" Canvas.Left="{Binding SampleLeftMargin}" Canvas.Top="{Binding SampleTopMargin}" />
+        </Canvas>
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <TextBlock Text="Hue" />
-            <Slider Minimum="0" Maximum="360" />
+            <Slider Minimum="{Binding HueMinValue}" Maximum="{Binding HueMaxValue}" Value="{Binding Hue}" />
             <TextBlock Text="Saturation" />
-            <Slider Minimum="0" Maximum="100" />
+            <Slider Minimum="{Binding SaturationMinValue}" Maximum="{Binding SaturationMaxValue}" Value="{Binding Saturation}" />
             <TextBlock Text="Brightness" />
-            <Slider Minimum="0" Maximum="100" />
+            <Slider Minimum="{Binding BrightnessMinValue}" Maximum="{Binding BrightnessMaxValue}" Value="{Binding Brightness}" />
+            <TextBlock Text="Alpha" />
+            <Slider Minimum="{Binding AlphaMinValue}" Maximum="{Binding AlphaMaxValue}" Value="{Binding Alpha}" />
         </StackPanel>
 
     </Grid>

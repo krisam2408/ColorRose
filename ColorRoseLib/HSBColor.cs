@@ -10,14 +10,7 @@ namespace ColorRoseLib
         public int Hue
         {
             get { return hue; }
-            set
-            {
-                if (value == 360)
-                    hue = 0;
-                if (value >= 0 && value < 360)
-                    hue = value;
-                throw new ArgumentOutOfRangeException(nameof(hue), value, "Value must be an integer between 0 and 360");
-            }
+            set { hue = SetHue(value); }
         }
 
         private byte saturation;
@@ -26,9 +19,12 @@ namespace ColorRoseLib
             get { return saturation; }
             set
             {
-                if (value >= 0 && value <= 100)
+                if (value >= MinSaturation && value <= MaxSaturation)
                     saturation = value;
-                throw new ArgumentOutOfRangeException(nameof(saturation), value, "Value must be an integer between 0 and 100");
+                if (value < MinSaturation)
+                    saturation = MinSaturation;
+                if (value > MaxSaturation)
+                    saturation = MaxSaturation;
             }
         }
 
@@ -38,9 +34,12 @@ namespace ColorRoseLib
             get { return brightness; }
             set
             {
-                if (value >= 0 && value <= 100)
+                if (value >= MinBrightness && value <= MaxBrightness)
                     brightness = value;
-                throw new ArgumentOutOfRangeException(nameof(brightness), value, "Value must be an integer between 0 and 100");
+                if (value < MinBrightness)
+                    brightness = MinBrightness;
+                if (value > MaxBrightness)
+                    brightness = MaxBrightness;
             }
         }
 
@@ -50,20 +49,23 @@ namespace ColorRoseLib
             get { return alpha; }
             set
             {
-                if (value >= 0 && value <= 255)
+                if (value >= MinAlpha && value <= MaxAlpha)
                     alpha = value;
-                throw new ArgumentOutOfRangeException(nameof(alpha), value, "Value must be an integer between 0 and 255");
+                if (value < MinAlpha)
+                    alpha = MinAlpha;
+                if (value > MaxAlpha)
+                    alpha = MaxAlpha;
             }
         }
 
         public static int MinHue { get { return 0; } }
         public static int MaxHue { get { return 360; } }
-        public static int MinSaturation { get { return 0; } }
-        public static int MaxSaturation { get { return 100; } }
-        public static int MinBrightness { get { return 0; } }
-        public static int MaxBrightness { get { return 100; } }
-        public static int MinAlpha { get { return 0; } }
-        public static int MaxAlpha { get { return 255; } }
+        public static byte MinSaturation { get { return 0; } }
+        public static byte MaxSaturation { get { return 100; } }
+        public static byte MinBrightness { get { return 0; } }
+        public static byte MaxBrightness { get { return 100; } }
+        public static byte MinAlpha { get { return 0; } }
+        public static byte MaxAlpha { get { return 255; } }
 
         public static HSBColor Red { get { return new HSBColor(0, 100, 100); } }
         public static HSBColor Orange { get { return new HSBColor(30, 100, 100); } }
@@ -197,5 +199,23 @@ namespace ColorRoseLib
             return $"#{color.A:x2}{color.R:x2}{color.G:x2}{color.B:x2}";
         }
 
+        public void Darken(byte val)
+        {
+            Brightness -= val;
+        }
+
+        public void Brighten(byte val)
+        {
+            Saturation -= val;
+        }
+
+        private int SetHue(int val)
+        {
+            while (val < MinHue)
+                val += MaxHue;
+            while (val > MaxHue)
+                val -= MaxHue;
+            return val;
+        }
     }
 }

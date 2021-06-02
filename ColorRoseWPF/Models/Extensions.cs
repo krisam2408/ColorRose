@@ -22,5 +22,10 @@ namespace ColorRoseWPF.Models
         {
             return MediaColor.FromArgb(color.A, color.R, color.G, color.B);
         }
+
+        public static bool IsNull(this object obj)
+        {
+            return obj == null;
+        }
     }
 }
