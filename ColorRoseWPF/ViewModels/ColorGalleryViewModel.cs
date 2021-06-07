@@ -1,4 +1,4 @@
-﻿using ColorRoseWPF.Models.Abstracts;
+﻿using ColorRoseWPF.Core.Abstracts;
 
 namespace ColorRoseWPF.ViewModels
 {

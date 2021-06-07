@@ -1,6 +1,6 @@
 ﻿using ColorRoseWPF.Models;
-using ColorRoseWPF.Models.Abstracts;
 using ColorRoseWPF.Core;
+using ColorRoseWPF.Core.Abstracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -86,11 +86,13 @@ namespace ColorRoseWPF.ViewModels
                     MenuItem item = new(i, landingPage.Display, landingPage.IsSelected);
                     item.SetContet($"Views/{landingPage.Page}.xaml");
                     item.TextColor = new SolidColorBrush(buttonSetting.TextColor.ToMediaColor());
+                    HSBColor middleColor = HSBColor.FromARGBColor(buttonSetting.BackgroundColor);
+                    middleColor.Brighten(56);
                     item.BackgroundColor = new LinearGradientBrush(
                         new GradientStopCollection(new List<GradientStop>
                         {
-                            new GradientStop(buttonSetting.BackgroundColor.ToMediaColor(), 0.6),
-                            new GradientStop(Color.FromRgb(200, 200, 200), 0.8),
+                            new GradientStop(buttonSetting.BackgroundColor.ToMediaColor(), 0.5),
+                            new GradientStop(middleColor.ToARGBColor().ToMediaColor(), 0.75),
                             new GradientStop(buttonSetting.BackgroundColor.ToMediaColor(), 1)
                         }),
                         new Point(0, 0),

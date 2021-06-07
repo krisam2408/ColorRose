@@ -1,23 +1,21 @@
-﻿using ColorRoseWPF.Models.Abstracts;
+﻿using ColorRoseWPF.Core.Abstracts;
 using ColorRoseWPF.Models;
-using Color = System.Drawing.Color;
 using System.Windows.Media;
 using ColorRoseLib;
 using System.Windows.Input;
 using ColorRoseWPF.Core;
 using System.Windows;
 using System.Windows.Controls;
-using System;
 
 namespace ColorRoseWPF.ViewModels
 {
-    public class SingleColorViewModel:BaseViewModel,INavegable
+    public class SingleColorViewModel : BaseViewModel, INavegable
     {
         private HSBColor SourceColor
         {
             get
             {
-                return new HSBColor(Hue.Value, (byte)Saturation.Value, (byte)Brightness.Value, (byte)Alpha.Value);
+                return new HSBColor(Hue.Value, (byte)Saturation.Value, (byte)Brightness.Value, (byte)Opacity.Value);
             }
         }
 
@@ -53,11 +51,11 @@ namespace ColorRoseWPF.ViewModels
             set { SetValue(ref brightness, value); }
         }
 
-        private ColorControl alpha;
-        public ColorControl Alpha
+        private ColorControl opacity;
+        public ColorControl Opacity
         {
-            get { return alpha; }
-            set { SetValue(ref alpha, value); }
+            get { return opacity; }
+            set { SetValue(ref opacity, value); }
         }
 
         public ICommand LoadedCommand { get { return new RelayCommand(e => Loaded((RoutedEventArgs)e)); } }
@@ -70,33 +68,49 @@ namespace ColorRoseWPF.ViewModels
 
         private void Initialize(HSBColor startingColor)
         {
-            Hue = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            Hue = new(() => 
+            { 
+                NotifyPropertyChanged(nameof(SampleColor)); 
+                NotifyPropertyChanged("Hue"); 
+            })
             {
                 Name = "Hue",
                 MinValue = HSBColor.MinHue,
                 MaxValue = HSBColor.MaxHue,
                 Value = startingColor.Hue
             };
-            Saturation = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            Saturation = new(() => 
+            { 
+                NotifyPropertyChanged(nameof(SampleColor)); 
+                NotifyPropertyChanged("Saturation.Value"); 
+            })
             {
                 Name = "Saturation",
                 MinValue = HSBColor.MinSaturation,
                 MaxValue = HSBColor.MaxSaturation,
                 Value = startingColor.Saturation
             };
-            Brightness = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            Brightness = new(() => 
+            { 
+                NotifyPropertyChanged(nameof(SampleColor));
+                NotifyPropertyChanged(nameof(Brightness));
+            })
             {
                 Name = "Brightness",
                 MinValue = HSBColor.MinBrightness,
                 MaxValue = HSBColor.MaxBrightness,
                 Value = startingColor.Brightness
             };
-            Alpha = new(() => { NotifyPropertyChanged(nameof(SampleColor)); })
+            Opacity = new(() => 
+            { 
+                NotifyPropertyChanged(nameof(SampleColor)); 
+                NotifyPropertyChanged(nameof(Opacity)); 
+            })
             {
-                Name = "Alpha",
-                MinValue = HSBColor.MinAlpha,
-                MaxValue = HSBColor.MaxAlpha,
-                Value = startingColor.Alpha
+                Name = "Opacity",
+                MinValue = HSBColor.MinOpacity,
+                MaxValue = HSBColor.MaxOpacity,
+                Value = startingColor.Opacity
             };
 
         }

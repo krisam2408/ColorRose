@@ -43,18 +43,18 @@ namespace ColorRoseLib
             }
         }
 
-        private byte alpha;
-        public byte Alpha
+        private byte opacity;
+        public byte Opacity
         {
-            get { return alpha; }
+            get { return opacity; }
             set
             {
-                if (value >= MinAlpha && value <= MaxAlpha)
-                    alpha = value;
-                if (value < MinAlpha)
-                    alpha = MinAlpha;
-                if (value > MaxAlpha)
-                    alpha = MaxAlpha;
+                if (value >= MinOpacity && value <= MaxOpacity)
+                    opacity = value;
+                if (value < MinOpacity)
+                    opacity = MinOpacity;
+                if (value > MaxOpacity)
+                    opacity = MaxOpacity;
             }
         }
 
@@ -64,8 +64,8 @@ namespace ColorRoseLib
         public static byte MaxSaturation { get { return 100; } }
         public static byte MinBrightness { get { return 0; } }
         public static byte MaxBrightness { get { return 100; } }
-        public static byte MinAlpha { get { return 0; } }
-        public static byte MaxAlpha { get { return 255; } }
+        public static byte MinOpacity { get { return 0; } }
+        public static byte MaxOpacity { get { return 255; } }
 
         public static HSBColor Red { get { return new HSBColor(0, 100, 100); } }
         public static HSBColor Orange { get { return new HSBColor(30, 100, 100); } }
@@ -92,11 +92,11 @@ namespace ColorRoseLib
             this.hue = 0;
             this.saturation = 0;
             this.brightness = 0;
-            this.alpha = 0;
+            this.opacity = 0;
             Hue = hue;
             Saturation = saturation;
             Brightness = brightness;
-            Alpha = alpha;
+            Opacity = alpha;
         }
 
         public HSBColor(int hue, byte saturation, byte brightness) : this(hue, saturation, brightness, 255) { }
@@ -134,7 +134,7 @@ namespace ColorRoseLib
 
             double relation = 0;
             if (channels[priority[0]] > 0)
-                relation = channels[priority[1]] / channels[priority[2]];
+                relation = channels[priority[1]] / channels[priority[0]];
 
             int rangePole = 1;
             if(priority[0] == 0 && priority[1] == 2)
@@ -184,7 +184,7 @@ namespace ColorRoseLib
                 if (channels[i] < saturationRatio)
                     channels[i] = (byte)Math.Round(saturationRatio);
 
-            return Color.FromArgb(Alpha, channels[0], channels[1], channels[2]);
+            return Color.FromArgb(Opacity, channels[0], channels[1], channels[2]);
         }
 
         public string RGBHexCode()
@@ -213,7 +213,7 @@ namespace ColorRoseLib
         {
             while (val < MinHue)
                 val += MaxHue;
-            while (val > MaxHue)
+            while (val >= MaxHue)
                 val -= MaxHue;
             return val;
         }

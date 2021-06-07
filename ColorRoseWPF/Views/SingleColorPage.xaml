@@ -23,11 +23,11 @@
                 </Ellipse>
             <Ellipse Fill="{Binding SampleColor}" StrokeThickness="4" Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding SampleHeight}" Height="{Binding SampleHeight}" Canvas.Left="{Binding SampleLeftMargin}" Canvas.Top="{Binding SampleTopMargin}" />
         </Canvas>
-        <StackPanel Grid.Column="1" Orientation="Vertical">
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,24,0,0">
             <controls:ColorControl DataContext="{Binding Hue}" />
             <controls:ColorControl DataContext="{Binding Saturation}" />
             <controls:ColorControl DataContext="{Binding Brightness}" />
-            <controls:ColorControl DataContext="{Binding Alpha}" />
+            <controls:ColorControl DataContext="{Binding Opacity}" />
         </StackPanel>
 
     </Grid>

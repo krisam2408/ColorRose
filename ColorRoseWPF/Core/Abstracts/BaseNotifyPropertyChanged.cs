@@ -2,16 +2,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ColorRoseWPF.Models.Abstracts
+namespace ColorRoseWPF.Core.Abstracts
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private bool isEnabled;
-        public bool IsEnabled { get { return isEnabled; } set { SetValue(ref isEnabled, value); } }
-
-        protected BaseViewModel() { }
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {

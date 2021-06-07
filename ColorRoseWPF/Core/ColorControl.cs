@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ColorRoseWPF.Core.Abstracts;
+using System;
+using System.Windows.Input;
 
 namespace ColorRoseWPF.Core
 {
-    public class ColorControl
+    public class ColorControl : BaseNotifyPropertyChanged
     {
         public string Name { get; set; }
         public int MinValue { get; set; }
@@ -14,19 +16,25 @@ namespace ColorRoseWPF.Core
             get { return _value; }
             set
             {
-                if (_value != value)
-                {
-                    _value = value;
-                    propertyChangedAction.Invoke();
-                }
+                if(value >= MinValue && value <= MaxValue)
+                    if(SetValue(ref _value, value))
+                        propertyChangedAction.Invoke();
             }
         }
+
+        public ICommand UpCommand { get { return new RelayCommand(e => ValueChange(1)); } }
+        public ICommand DownCommand { get { return new RelayCommand(e => ValueChange(-1)); } }
 
         private Action propertyChangedAction;
 
         public ColorControl(Action propertyChangedAction)
         {
             this.propertyChangedAction = propertyChangedAction;
+        }
+
+        private void ValueChange(int i)
+        {
+            Value += i;
         }
     }
 }

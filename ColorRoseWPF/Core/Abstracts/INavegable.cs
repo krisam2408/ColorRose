@@ -1,4 +1,4 @@
-﻿namespace ColorRoseWPF.Models.Abstracts
+﻿namespace ColorRoseWPF.Core.Abstracts
 {
     public interface INavegable
     {
