@@ -103,8 +103,9 @@ namespace ColorRoseLib
         
         public HSBColor(int hue, int saturation, int brightness) : this(hue, (byte)saturation, (byte)brightness, 255) { }
         
-        public static HSBColor FromARGBColor(Color color)
+        public static HSBColor FromARGB(byte alpha, byte red, byte green, byte blue)
         {
+            Color color = Color.FromArgb(alpha, red, green, blue);
             byte[] channels = { color.R, color.G, color.B };
             int[] priority = { 0, 0, 0 };
             byte channelMax = 0;
@@ -134,7 +135,7 @@ namespace ColorRoseLib
 
             double relation = 0;
             if (channels[priority[0]] > 0)
-                relation = channels[priority[1]] / channels[priority[0]];
+                relation = (double)channels[priority[1]] / (double)channels[priority[0]];
 
             int rangePole = 1;
             if(priority[0] == 0 && priority[1] == 2)
@@ -143,9 +144,9 @@ namespace ColorRoseLib
                 priority[0] = 3;
             }
 
-            double brightnessFormula = channelMax / 255 * 100;
-            double saturationFormula = 100 - (channelMin / 255 * 100);
-            double hueFormula = priority[0] * 120 + relation * 60 * rangePole;
+            double brightnessFormula = (double)channelMax / 255.0 * 100.0;
+            double saturationFormula = 100.0 - ((double)channelMin / 255.0 * 100.0);
+            double hueFormula = (double)priority[0] * 120.0 + (double)relation * 60.0 * (double)rangePole;
 
             byte brightness = (byte)Math.Round(brightnessFormula);
             byte saturation = (byte)Math.Round(saturationFormula);
@@ -154,7 +155,7 @@ namespace ColorRoseLib
             return new HSBColor(hue, saturation, brightness, color.A);
         }
 
-        public Color ToARGBColor()
+        public byte[] ToARGB()
         {
             byte[] channels = { 0, 0, 0 };
             int quadrant = Hue / 120;
@@ -184,18 +185,23 @@ namespace ColorRoseLib
                 if (channels[i] < saturationRatio)
                     channels[i] = (byte)Math.Round(saturationRatio);
 
-            return Color.FromArgb(Opacity, channels[0], channels[1], channels[2]);
+            Color color = Color.FromArgb(Opacity, channels[0], channels[1], channels[2]);
+            byte[] output = new byte[4] { color.A, color.R, color.G, color.B };
+
+            return output;
         }
 
         public string RGBHexCode()
         {
-            Color color = ToARGBColor();
+            byte[] channels = ToARGB();
+            Color color = Color.FromArgb(channels[0], channels[1], channels[2], channels[3]);
             return $"#{color.R:x2}{color.G:x2}{color.B:x2}";
         }
 
         public string ARGBHexCode()
         {
-            Color color = ToARGBColor();
+            byte[] channels = ToARGB();
+            Color color = Color.FromArgb(channels[0], channels[1], channels[2], channels[3]);
             return $"#{color.A:x2}{color.R:x2}{color.G:x2}{color.B:x2}";
         }
 
