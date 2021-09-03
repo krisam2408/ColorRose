@@ -7,11 +7,12 @@
         xmlns:pages="clr-namespace:ColorRoseWPF.Views"
         mc:Ignorable="d"
         DataContext="{Binding Terminal, Source={StaticResource Locator}}"
-        Height="{Binding WindowHeight}" Width="{Binding WindowWidth}"
+        MinHeight="{Binding WindowHeight}" MinWidth="{Binding WindowWidth}"
         WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True">
-    <Border Background="#272537" CornerRadius="16" Padding="8">
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
+    <Border Background="{StaticResource Dark}" CornerRadius="16" Padding="8">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" />

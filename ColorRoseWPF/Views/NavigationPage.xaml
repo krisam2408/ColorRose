@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:ColorRoseWPF.Views"
       xmlns:core="clr-namespace:ColorRoseWPF.Core"
+      xmlns:controls="clr-namespace:ColorRoseWPF.Views.Controls"
       mc:Ignorable="d" 
       DataContext="{Binding Terminal, Source={StaticResource Locator}}">
 
@@ -16,11 +17,11 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Background="Transparent" core:MouseBehaviour.MouseUpCommand="{Binding AppMoveUpCommand}" core:MouseBehaviour.MouseDownCommand="{Binding AppMoveDownCommand}" core:MouseBehaviour.MouseDragCommand="{Binding AppMoveDragCommand}" core:MouseBehaviour.MouseLeaveCommand="{Binding AppMoveLeaveCommand}" />
-            <Button Content="®" Grid.Column="1" Style="{StaticResource WindowButton}" Command="{Binding AppMinimizeCommand}" />
-            <Button Content="{Binding MaximizeButtonIcon}" Grid.Column="2" Style="{StaticResource WindowButton}" Command="{Binding AppMaximizeCommand}" />
-            <Button Content="Ó" Grid.Column="3" Style="{StaticResource WindowButton}" Command="{Binding AppCloseCommand}" />
+            <StackPanel Grid.Column="0" Background="Transparent" core:MouseBehaviour.MouseDownCommand="{Binding AppMoveDownCommand}" />
+            <controls:MinimizeButtonControl Grid.Column="1" Command="{Binding AppMinimizeCommand}" />
+            <controls:MaximizeButtonControl Grid.Column="2" Command="{Binding AppMaximizeCommand}" Margin="8,0,8,0" />
+            <controls:CloseButtonControl Grid.Column="3" Command="{Binding AppCloseCommand}" />
         </Grid>
-        <ListView ItemsSource="{Binding NavDestinations}" SelectedItem="{Binding Destination}" Style="{StaticResource NavigationMenu}" />
+        <ListView ItemsSource="{Binding NavDestinations}" SelectedItem="{Binding Destination}" Style="{StaticResource NavigationMenu}" Margin="0,8,0,0" />
     </StackPanel>
 </Page>

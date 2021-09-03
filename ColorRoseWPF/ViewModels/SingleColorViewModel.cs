@@ -15,11 +15,13 @@ namespace ColorRoseWPF.ViewModels
         {
             get
             {
-                return new HSBColor(Hue.Value, (byte)Saturation.Value, (byte)Brightness.Value, (byte)Opacity.Value);
+                HSBColor output = new HSBColor(Hue.Value, (byte)Saturation.Value, (byte)Brightness.Value, (byte)Opacity.Value);
+                HexCode = output.RGBHexCode();
+                return output;
             }
         }
 
-        public Brush SampleColor { get { return new SolidColorBrush(SourceColor.ToARGBColor().ToMediaColor()); } }
+        public Brush SampleColor { get { return new SolidColorBrush(SourceColor.ToARGB().ToMediaColor()); } }
 
         private double sampleHeight;
         public double SampleHeight { get { return sampleHeight; } set { SetValue(ref sampleHeight, value); } }
@@ -56,6 +58,13 @@ namespace ColorRoseWPF.ViewModels
         {
             get { return opacity; }
             set { SetValue(ref opacity, value); }
+        }
+
+        private string hexCode;
+        public string HexCode 
+        { 
+            get { return hexCode; }
+            set { SetValue(ref hexCode, value); }
         }
 
         public ICommand LoadedCommand { get { return new RelayCommand(e => Loaded((RoutedEventArgs)e)); } }

@@ -1,7 +1,9 @@
-﻿using ColorRoseLib.Exceptions;
+﻿using ColorRoseLib;
+using ColorRoseLib.Exceptions;
+using ColorRoseWPF.Models;
 using System;
-using System.Drawing;
 using System.Linq;
+using System.Windows.Media;
 
 namespace ColorRoseWPF.Core
 {
@@ -23,7 +25,9 @@ namespace ColorRoseWPF.Core
             }
             catch(NotValidColorException)
             {
-                bgc = Color.Orange;
+                HSBColor color = HSBColor.Orange;
+                byte[] colorChannels = color.ToARGB();
+                bgc = colorChannels.ToMediaColor();
             }
             try
             {
@@ -31,7 +35,9 @@ namespace ColorRoseWPF.Core
             }
             catch(Exception)
             {
-                txt = Color.White;
+                HSBColor color = HSBColor.White;
+                byte[] colorChannels = color.ToARGB();
+                txt = colorChannels.ToMediaColor();
             }
             BackgroundColor = bgc;
             TextColor = txt;
@@ -56,7 +62,9 @@ namespace ColorRoseWPF.Core
                     }
                 }
 
-                output = Color.FromName(colorParam);
+                HSBColor color = HSBColor.FromName(colorParam);
+                byte[] colorChannels = color.ToARGB();
+                output = colorChannels.ToMediaColor();
             }
             catch(Exception e)
             {

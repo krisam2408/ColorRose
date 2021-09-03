@@ -8,9 +8,11 @@
 
         <ResourceDictionary>
             <model:Locator x:Key="Locator" />
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Content/Themes/NavigationMenuTheme.xaml" />
                 <ResourceDictionary Source="Content/Themes/ColorControlTheme.xaml" />
+                <ResourceDictionary Source="Content/Themes/ColorsDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

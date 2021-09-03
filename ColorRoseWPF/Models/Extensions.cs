@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MediaColor = System.Windows.Media.Color;
-using Color = System.Drawing.Color;
+using System.Windows.Media;
 
 namespace ColorRoseWPF.Models
 {
@@ -18,9 +17,14 @@ namespace ColorRoseWPF.Models
             return output;
         }
 
-        public static MediaColor ToMediaColor(this Color color)
+        public static Color ToMediaColor(this byte[] colorChannels)
         {
-            return MediaColor.FromArgb(color.A, color.R, color.G, color.B);
+            return Color.FromArgb(colorChannels[0], colorChannels[1], colorChannels[2], colorChannels[3]);
+        }
+
+        public static byte[] ToChannelsBytes(this Color color)
+        {
+            return new byte[] { color.A, color.R, color.G, color.B };
         }
 
         public static bool IsNull(this object obj)

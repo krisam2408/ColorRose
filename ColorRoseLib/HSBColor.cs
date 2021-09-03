@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColorRoseLib.Exceptions;
+using System;
 using System.Drawing;
 using System.Linq;
 
@@ -84,10 +85,25 @@ namespace ColorRoseLib
         public static HSBColor Gray { get { return new HSBColor(0, 0, 50); } }
         public static HSBColor DarkGray { get { return new HSBColor(0, 0, 33); } }
         public static HSBColor LightGray { get { return new HSBColor(0, 0, 66); } }
-       
+
         public static HSBColor Transparent { get { return new HSBColor(0, 0, 0, 0); } }
 
-        public HSBColor(int hue, byte saturation, byte brightness, byte alpha)
+        public static HSBColor RoseDark { get { return FromHexCode("#24292E"); } }
+        public static HSBColor RoseGray { get { return FromHexCode("#343a40"); } }
+        public static HSBColor RoseLight { get { return FromHexCode("#f8f9fa"); } }
+        public static HSBColor RoseDarkLight { get { return FromHexCode("#b8b9ba"); } }
+        public static HSBColor RoseBlue { get { return FromHexCode("#007bff"); } }
+        public static HSBColor RoseIndigo { get { return FromHexCode("#6610f2"); } }
+        public static HSBColor RosePurple { get { return FromHexCode("#6f42c1"); } }
+        public static HSBColor RoseRose { get { return FromHexCode("#e83e8c"); } }
+        public static HSBColor RoseRed { get { return FromHexCode("#D7221A"); } }
+        public static HSBColor RoseOrange { get { return FromHexCode("#fd7e14"); } }
+        public static HSBColor RoseYellow { get { return FromHexCode("#ffc107"); } }
+        public static HSBColor RoseGreen { get { return FromHexCode("#28a745"); } }
+        public static HSBColor RoseTeal { get { return FromHexCode("#20c997"); } }
+        public static HSBColor RoseCyan { get { return FromHexCode("#17a2b8"); } }
+
+        public HSBColor(int hue, byte saturation, byte brightness, byte opacity)
         {
             this.hue = 0;
             this.saturation = 0;
@@ -96,21 +112,20 @@ namespace ColorRoseLib
             Hue = hue;
             Saturation = saturation;
             Brightness = brightness;
-            Opacity = alpha;
+            Opacity = opacity;
         }
 
         public HSBColor(int hue, byte saturation, byte brightness) : this(hue, saturation, brightness, 255) { }
         
         public HSBColor(int hue, int saturation, int brightness) : this(hue, (byte)saturation, (byte)brightness, 255) { }
         
-        public static HSBColor FromARGB(byte alpha, byte red, byte green, byte blue)
+        public static HSBColor FromARGB(byte opacity, byte red, byte green, byte blue)
         {
-            Color color = Color.FromArgb(alpha, red, green, blue);
+            Color color = Color.FromArgb(opacity, red, green, blue);
             byte[] channels = { color.R, color.G, color.B };
             int[] priority = { 0, 0, 0 };
             byte channelMax = 0;
             byte channelMin = 255;
-
 
             for(int i = 0; i < channels.Length; i++)
             {
@@ -153,6 +168,126 @@ namespace ColorRoseLib
             int hue = (int)Math.Round(hueFormula);
 
             return new HSBColor(hue, saturation, brightness, color.A);
+        }
+
+        public static HSBColor FromARGB(byte[] colorChannels)
+        {
+            return FromARGB(colorChannels[0], colorChannels[1], colorChannels[2], colorChannels[3]);
+        }
+
+        public static HSBColor FromName(string colorName)
+        {
+            colorName = colorName.ToLower();
+
+            switch(colorName)
+            {
+                case "red":
+                    return Red;
+                case "orange":
+                    return Orange;
+                case "yellow":
+                    return Yellow;
+                case "lime":
+                    return Lime;
+                case "green":
+                    return Green;
+                case "aqua":
+                    return Aqua;
+                case "cyan":
+                    return Cyan;
+                case "indigo":
+                    return Indigo;
+                case "blue":
+                    return Blue;
+                case "purple":
+                    return Purple;
+                case "magenta":
+                    return Magenta;
+                case "rose":
+                    return Rose;
+                case "white":
+                    return White;
+                case "black":
+                    return Black;
+                case "darkgray":
+                    return DarkGray;
+                case "lightgray":
+                    return LightGray;
+                case "transparent":
+                    return Transparent;
+                case "rosedark":
+                    return RoseDark;
+                case "rosegray":
+                    return RoseGray;
+                case "roselight":
+                    return RoseLight;
+                case "rosedarklight":
+                    return RoseDarkLight;
+                case "roseblue":
+                    return RoseBlue;
+                case "roseindigo":
+                    return RoseIndigo;
+                case "rosepurple":
+                    return RosePurple;
+                case "roserose":
+                    return RoseRose;
+                case "rosered":
+                    return RoseRed;
+                case "roseorange":
+                    return RoseOrange;
+                case "roseyellow":
+                    return RoseYellow;
+                case "rosegreen":
+                    return RoseGreen;
+                case "roseteal":
+                    return RoseTeal;
+                case "rosecyan":
+                    return RoseCyan;
+                default:
+                    throw new NotValidColorException(nameof(colorName));
+            }
+        }
+
+        public static HSBColor FromHexCode(string hexCode)
+        {
+            if (hexCode[0] != '#')
+                throw new FormatException("Hexcode out of format");
+
+            switch(hexCode.Length)
+            {
+                case 4:
+                case 7:
+                case 9:
+                    hexCode = hexCode.Substring(1).ToUpper();
+                    if (hexCode.Length == 3)
+                    {
+                        string dCode = hexCode;
+                        hexCode = $"FF{dCode[0]}{dCode[0]}{dCode[1]}{dCode[1]}{dCode[2]}{dCode[2]}";
+                    }
+                    if (hexCode.Length == 6)
+                    {
+                        string dCode = hexCode;
+                        hexCode = $"FF{dCode[0]}{dCode[1]}{dCode[2]}{dCode[3]}{dCode[4]}{dCode[5]}";
+                    }
+
+                    string[] channelHex = { $"{hexCode[0]}{hexCode[1]}", $"{hexCode[2]}{hexCode[3]}", $"{hexCode[4]}{hexCode[5]}", $"{hexCode[6]}{hexCode[7]}" };
+                    byte[] channel = channelHex
+                        .Select(h => Convert.ToByte(h, 16))
+                        .ToArray();
+
+                    return FromARGB(channel);
+                default:
+                    throw new FormatException("Hexcode out of format");
+            }
+        }
+
+        private int SetHue(int val)
+        {
+            while (val < MinHue)
+                val += MaxHue;
+            while (val >= MaxHue)
+                val -= MaxHue;
+            return val;
         }
 
         public byte[] ToARGB()
@@ -215,13 +350,9 @@ namespace ColorRoseLib
             Saturation -= val;
         }
 
-        private int SetHue(int val)
+        public void SetOpacity(byte val)
         {
-            while (val < MinHue)
-                val += MaxHue;
-            while (val >= MaxHue)
-                val -= MaxHue;
-            return val;
+            Opacity = val;
         }
     }
 }

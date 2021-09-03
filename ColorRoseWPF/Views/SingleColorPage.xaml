@@ -24,10 +24,13 @@
             <Ellipse Fill="{Binding SampleColor}" StrokeThickness="4" Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{Binding SampleHeight}" Height="{Binding SampleHeight}" Canvas.Left="{Binding SampleLeftMargin}" Canvas.Top="{Binding SampleTopMargin}" />
         </Canvas>
         <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,24,0,0">
-            <controls:ColorControl DataContext="{Binding Hue}" />
-            <controls:ColorControl DataContext="{Binding Saturation}" />
-            <controls:ColorControl DataContext="{Binding Brightness}" />
-            <controls:ColorControl DataContext="{Binding Opacity}" />
+            <controls:ColorControl DataContext="{Binding Hue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <controls:ColorControl DataContext="{Binding Saturation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <controls:ColorControl DataContext="{Binding Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <controls:ColorControl DataContext="{Binding Opacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Border CornerRadius="8" Background="{StaticResource Light}" Padding="16, 4" Margin="0,16,0,0">
+                <TextBlock Text="{Binding HexCode}" HorizontalAlignment="Right" />
+            </Border>
         </StackPanel>
 
     </Grid>

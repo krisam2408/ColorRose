@@ -30,16 +30,10 @@ namespace ColorRoseWPF.ViewModels
             }
         }
 
-        private bool IsWindowBeingDragged { get; set; }
-        private Point WindowPosition { get; set; }
-
-        public ICommand AppCloseCommand { get { return new RelayCommand(e => AppClose(e)); } }
-        public ICommand AppMinimizeCommand { get { return new RelayCommand(e => AppMinimize(e)); } }
-        public ICommand AppMaximizeCommand { get { return new RelayCommand(e => AppMaximize(e)); } }
-        public ICommand AppMoveUpCommand { get { return new RelayCommand(e => AppMove(MouseAction.Up, (MouseEventArgs)e)); } }
-        public ICommand AppMoveDownCommand { get { return new RelayCommand(e => AppMove(MouseAction.Down, (MouseEventArgs)e)); } }
-        public ICommand AppMoveDragCommand { get { return new RelayCommand(e => AppMove(MouseAction.Drag, (MouseEventArgs)e)); } }
-        public ICommand AppMoveLeaveCommand { get { return new RelayCommand(e => AppMove(MouseAction.Leave, (MouseEventArgs)e)); } }
+        public ICommand AppCloseCommand { get { return new RelayCommand(e => AppClose()); } }
+        public ICommand AppMinimizeCommand { get { return new RelayCommand(e => AppMinimize()); } }
+        public ICommand AppMaximizeCommand { get { return new RelayCommand(e => AppMaximize()); } }
+        public ICommand AppMoveDownCommand { get { return new RelayCommand(e => AppMove((MouseEventArgs)e)); } }
 
         private string maximizeButtonIcon;
         public string MaximizeButtonIcon { get { return maximizeButtonIcon; } set { SetValue(ref maximizeButtonIcon, value); } }
@@ -83,17 +77,22 @@ namespace ColorRoseWPF.ViewModels
                 if(landingPage.IsEnabled)
                 {
                     ButtonSettingsAttribute buttonSetting = (ButtonSettingsAttribute)p.GetCustomAttributes(typeof(ButtonSettingsAttribute)).FirstOrDefault();
+
                     MenuItem item = new(i, landingPage.Display, landingPage.IsSelected);
                     item.SetContet($"Views/{landingPage.Page}.xaml");
-                    item.TextColor = new SolidColorBrush(buttonSetting.TextColor.ToMediaColor());
-                    HSBColor middleColor = HSBColor.FromARGBColor(buttonSetting.BackgroundColor);
+
+                    item.TextColor = new SolidColorBrush(buttonSetting.TextColor);
+
+                    byte[] bgcColorChannels = buttonSetting.BackgroundColor.ToChannelsBytes();
+                    HSBColor middleColor = HSBColor.FromARGB(bgcColorChannels);
                     middleColor.Brighten(56);
+                   
                     item.BackgroundColor = new LinearGradientBrush(
                         new GradientStopCollection(new List<GradientStop>
                         {
-                            new GradientStop(buttonSetting.BackgroundColor.ToMediaColor(), 0.5),
-                            new GradientStop(middleColor.ToARGBColor().ToMediaColor(), 0.75),
-                            new GradientStop(buttonSetting.BackgroundColor.ToMediaColor(), 1)
+                            new GradientStop(buttonSetting.BackgroundColor, 0.5),
+                            new GradientStop(middleColor.ToARGB().ToMediaColor(), 0.75),
+                            new GradientStop(buttonSetting.BackgroundColor, 1)
                         }),
                         new Point(0, 0),
                         new Point(0, 1)
@@ -120,46 +119,31 @@ namespace ColorRoseWPF.ViewModels
             return false;
         }
 
-        private void AppClose(object parameter)
+        private void AppClose()
         {
             Application.Current.Shutdown();
         }
 
-        private void AppMinimize(object parameter)
+        private void AppMinimize()
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void AppMaximize(object parameter)
+        private void AppMaximize()
         {
             if(Application.Current.MainWindow.WindowState == WindowState.Maximized)
             {
-                MaximizeButtonIcon = "0";
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
                 return;
             }
 
-            MaximizeButtonIcon = "1";
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
         }
 
-        private void AppMove(MouseAction action, MouseEventArgs e)
+        private void AppMove(MouseEventArgs e)
         {
-            Point mousePosition = e.GetPosition(Application.Current.MainWindow);
-            if(action == MouseAction.Down)
-            {
-                IsWindowBeingDragged = true;
-                WindowPosition = mousePosition;
-            }
-
-            if (action == MouseAction.Leave || action == MouseAction.Up)
-                IsWindowBeingDragged = false;
-
-            if(action == MouseAction.Drag && IsWindowBeingDragged)
-            {
-                Application.Current.MainWindow.Left += mousePosition.X - WindowPosition.X;
-                Application.Current.MainWindow.Top += mousePosition.Y - WindowPosition.Y;
-            }
+            if (e.LeftButton == MouseButtonState.Pressed)
+                Application.Current.MainWindow.DragMove();
         }
 
 
