@@ -16,7 +16,7 @@ namespace ColorRoseWPF.ViewModels
             get
             {
                 HSBColor output = new HSBColor(Hue.Value, (byte)Saturation.Value, (byte)Brightness.Value, (byte)Opacity.Value);
-                HexCode = output.RGBHexCode();
+                HexCode = output.ARGBHexCode();
                 return output;
             }
         }

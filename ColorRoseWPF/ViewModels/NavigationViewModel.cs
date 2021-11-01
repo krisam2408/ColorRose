@@ -49,8 +49,8 @@ namespace ColorRoseWPF.ViewModels
             switch (Destination.Key)
             {
                 case 0:
-                    HSBColor startingColor = HSBColor.Purple;
-                    startingColor.Darken(30);
+                    HSBColor startingColor = HSBColor.Red;
+                    //startingColor.Darken(30);
                     Terminal.Instance.SingleColor = new(startingColor);
                     break;
                 case 1:
@@ -85,7 +85,7 @@ namespace ColorRoseWPF.ViewModels
 
                     byte[] bgcColorChannels = buttonSetting.BackgroundColor.ToChannelsBytes();
                     HSBColor middleColor = HSBColor.FromARGB(bgcColorChannels);
-                    middleColor.Brighten(56);
+                    middleColor.Desaturate(56);
                    
                     item.BackgroundColor = new LinearGradientBrush(
                         new GradientStopCollection(new List<GradientStop>

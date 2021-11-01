@@ -1,13 +1,22 @@
 ﻿using ColorRoseLib.Exceptions;
 using System;
-using System.Drawing;
 using System.Linq;
 
 namespace ColorRoseLib
 {
+    /// <summary>
+    /// A Color representation using the HSB (Hue, Saturation, Brightness) standard.
+    /// </summary>
     public struct HSBColor
     {
         private int hue;
+        /// <summary>
+        /// Determines the tint of the color.
+        /// 0º -> Red.
+        /// 120º -> Green.
+        /// 240º -> Blue.
+        /// 360º -> Red.
+        /// </summary>
         public int Hue
         {
             get { return hue; }
@@ -15,6 +24,9 @@ namespace ColorRoseLib
         }
 
         private byte saturation;
+        /// <summary>
+        /// Determines the richness of the color, varying from white to degrees of gray until the defined color by hue.
+        /// </summary>
         public byte Saturation
         {
             get { return saturation; }
@@ -30,6 +42,9 @@ namespace ColorRoseLib
         }
 
         private byte brightness;
+        /// <summary>
+        /// Determines how bright the color is, varying from black to the defined color by hue.
+        /// </summary>
         public byte Brightness
         {
             get { return brightness; }
@@ -45,6 +60,9 @@ namespace ColorRoseLib
         }
 
         private byte opacity;
+        /// <summary>
+        /// Determines how opaque the color is, varying from transparent to a full opaque color.
+        /// </summary>
         public byte Opacity
         {
             get { return opacity; }
@@ -59,50 +77,177 @@ namespace ColorRoseLib
             }
         }
 
+        /// <summary>
+        /// Minimum value for Hue. Returns 0.
+        /// </summary>
         public static int MinHue { get { return 0; } }
+        /// <summary>
+        /// Minimum value for Hue. Returns 360.
+        /// </summary>
         public static int MaxHue { get { return 360; } }
+        /// <summary>
+        /// Minimum value for Saturation. Returns 0.
+        /// </summary>
         public static byte MinSaturation { get { return 0; } }
+        /// <summary>
+        /// Minimum value for Saturation. Returns 100.
+        /// </summary>
         public static byte MaxSaturation { get { return 100; } }
+        /// <summary>
+        /// Minimum value for Brightness. Returns 0.
+        /// </summary>
         public static byte MinBrightness { get { return 0; } }
+        /// <summary>
+        /// Minimum value for Brightness. Returns 100.
+        /// </summary>
         public static byte MaxBrightness { get { return 100; } }
+        /// <summary>
+        /// Minimum value for Opacity. Returns 0.
+        /// </summary>
         public static byte MinOpacity { get { return 0; } }
+        /// <summary>
+        /// Minimum value for Opacity. Returns 255.
+        /// </summary>
         public static byte MaxOpacity { get { return 255; } }
 
+        /// <summary>
+        /// HSB Red color
+        /// </summary>
         public static HSBColor Red { get { return new HSBColor(0, 100, 100); } }
+        /// <summary>
+        /// HSB Orange color
+        /// </summary>
         public static HSBColor Orange { get { return new HSBColor(30, 100, 100); } }
+        /// <summary>
+        /// HSB Yellow color
+        /// </summary>
         public static HSBColor Yellow { get { return new HSBColor(60, 100, 100); } }
+        /// <summary>
+        /// HSB Lime color
+        /// </summary>
         public static HSBColor Lime { get { return new HSBColor(90, 100, 100); } }
+        /// <summary>
+        /// HSB Green color
+        /// </summary>
         public static HSBColor Green { get { return new HSBColor(120, 100, 100); } }
+        /// <summary>
+        /// HSB Aqua color
+        /// </summary>
         public static HSBColor Aqua { get { return new HSBColor(150, 100, 100); } }
+        /// <summary>
+        /// HSB Cyan color
+        /// </summary>
         public static HSBColor Cyan { get { return new HSBColor(180, 100, 100); } }
+        /// <summary>
+        /// HSB Indigo color
+        /// </summary>
         public static HSBColor Indigo { get { return new HSBColor(210, 100, 100); } }
+        /// <summary>
+        /// HSB Blue color
+        /// </summary>
         public static HSBColor Blue { get { return new HSBColor(240, 100, 100); } }
+        /// <summary>
+        /// HSB Purple color
+        /// </summary>
         public static HSBColor Purple { get { return new HSBColor(270, 100, 100); } }
+        /// <summary>
+        /// HSB Magenta color
+        /// </summary>
         public static HSBColor Magenta { get { return new HSBColor(300, 100, 100); } }
+        /// <summary>
+        /// HSB Rose color
+        /// </summary>
         public static HSBColor Rose { get { return new HSBColor(330, 100, 100); } }
+        /// <summary>
+        /// HSB White color
+        /// </summary>
         public static HSBColor White { get { return new HSBColor(0, 0, 100); } }
+        /// <summary>
+        /// HSB Black color
+        /// </summary>
         public static HSBColor Black { get { return new HSBColor(0, 0, 0); } }
+        /// <summary>
+        /// HSB Gray color
+        /// </summary>
         public static HSBColor Gray { get { return new HSBColor(0, 0, 50); } }
+        /// <summary>
+        /// HSB DarkGray color
+        /// </summary>
         public static HSBColor DarkGray { get { return new HSBColor(0, 0, 33); } }
+        /// <summary>
+        /// HSB Light Gray color
+        /// </summary>
         public static HSBColor LightGray { get { return new HSBColor(0, 0, 66); } }
 
+        /// <summary>
+        /// HSB Transparent color.
+        /// </summary>
         public static HSBColor Transparent { get { return new HSBColor(0, 0, 0, 0); } }
 
+        /// <summary>
+        /// Custom HSB Dark color
+        /// </summary>
         public static HSBColor RoseDark { get { return FromHexCode("#24292E"); } }
+        /// <summary>
+        /// Custom HSB Gray color
+        /// </summary>
         public static HSBColor RoseGray { get { return FromHexCode("#343a40"); } }
+        /// <summary>
+        /// Custom HSB Light color
+        /// </summary>
         public static HSBColor RoseLight { get { return FromHexCode("#f8f9fa"); } }
+        /// <summary>
+        /// Custom HSB Dark Light color
+        /// </summary>
         public static HSBColor RoseDarkLight { get { return FromHexCode("#b8b9ba"); } }
+        /// <summary>
+        /// Custom HSB Blue color
+        /// </summary>
         public static HSBColor RoseBlue { get { return FromHexCode("#007bff"); } }
+        /// <summary>
+        /// Custom HSB Indigo color
+        /// </summary>
         public static HSBColor RoseIndigo { get { return FromHexCode("#6610f2"); } }
+        /// <summary>
+        /// Custom HSB Purple color
+        /// </summary>
         public static HSBColor RosePurple { get { return FromHexCode("#6f42c1"); } }
+        /// <summary>
+        /// Custom HSB Rose color
+        /// </summary>
         public static HSBColor RoseRose { get { return FromHexCode("#e83e8c"); } }
+        /// <summary>
+        /// Custom HSB Red color
+        /// </summary>
         public static HSBColor RoseRed { get { return FromHexCode("#D7221A"); } }
+        /// <summary>
+        /// Custom HSB Orange color
+        /// </summary>
         public static HSBColor RoseOrange { get { return FromHexCode("#fd7e14"); } }
+        /// <summary>
+        /// Custom HSB Yellow color
+        /// </summary>
         public static HSBColor RoseYellow { get { return FromHexCode("#ffc107"); } }
+        /// <summary>
+        /// Custom HSB Green color
+        /// </summary>
         public static HSBColor RoseGreen { get { return FromHexCode("#28a745"); } }
+        /// <summary>
+        /// Custom HSB Teal color
+        /// </summary>
         public static HSBColor RoseTeal { get { return FromHexCode("#20c997"); } }
+        /// <summary>
+        /// Custom HSB Cyan color
+        /// </summary>
         public static HSBColor RoseCyan { get { return FromHexCode("#17a2b8"); } }
 
+        /// <summary>
+        /// A new HSBColor.
+        /// </summary>
+        /// <param name="hue">Hue value.</param>
+        /// <param name="saturation">Saturation value.</param>
+        /// <param name="brightness">Brightness value.</param>
+        /// <param name="opacity">Opacity value.</param>
         public HSBColor(int hue, byte saturation, byte brightness, byte opacity)
         {
             this.hue = 0;
@@ -115,14 +260,33 @@ namespace ColorRoseLib
             Opacity = opacity;
         }
 
+        /// <summary>
+        /// A new HSBColor.
+        /// </summary>
+        /// <param name="hue">Hue value.</param>
+        /// <param name="saturation">Saturation value.</param>
+        /// <param name="brightness">Brightness value.</param>
         public HSBColor(int hue, byte saturation, byte brightness) : this(hue, saturation, brightness, 255) { }
-        
+
+        /// <summary>
+        /// A new HSBColor.
+        /// </summary>
+        /// <param name="hue">Hue value.</param>
+        /// <param name="saturation">Saturation value.</param>
+        /// <param name="brightness">Brightness value.</param>
         public HSBColor(int hue, int saturation, int brightness) : this(hue, (byte)saturation, (byte)brightness, 255) { }
         
+        /// <summary>
+        /// Returns a HSBColor from the ARGB channels of another color.
+        /// </summary>
+        /// <param name="opacity">Opacity value.</param>
+        /// <param name="red">Red value.</param>
+        /// <param name="green">Green value.</param>
+        /// <param name="blue">Blue value.</param>
+        /// <returns>A new HSBColor from the values of another ARGB Color.</returns>
         public static HSBColor FromARGB(byte opacity, byte red, byte green, byte blue)
         {
-            Color color = Color.FromArgb(opacity, red, green, blue);
-            byte[] channels = { color.R, color.G, color.B };
+            byte[] channels = { red, green, blue };
             int[] priority = { 0, 0, 0 };
             byte channelMax = 0;
             byte channelMin = 255;
@@ -167,14 +331,29 @@ namespace ColorRoseLib
             byte saturation = (byte)Math.Round(saturationFormula);
             int hue = (int)Math.Round(hueFormula);
 
-            return new HSBColor(hue, saturation, brightness, color.A);
+            return new HSBColor(hue, saturation, brightness, opacity);
         }
 
+        /// <summary>
+        /// Returns a HSBColor from the ARGB channels of another color.
+        /// </summary>
+        /// <param name="colorChannels">Byte array containing the color channels of another ARGB color.</param>
+        /// <returns>A new HSBColor from the values of another ARGB Color.</returns>
         public static HSBColor FromARGB(byte[] colorChannels)
         {
-            return FromARGB(colorChannels[0], colorChannels[1], colorChannels[2], colorChannels[3]);
+            if(colorChannels.Length == 4)
+                return FromARGB(colorChannels[0], colorChannels[1], colorChannels[2], colorChannels[3]);
+            if(colorChannels.Length == 3)
+                return FromARGB(255, colorChannels[0], colorChannels[1], colorChannels[2]);
+
+            throw new NotValidColorByteArrayException();
         }
 
+        /// <summary>
+        /// Returns a HSBColor from a known color name. E.g. "Blue".
+        /// </summary>
+        /// <param name="colorName">A known color name.</param>
+        /// <returns>A new HSBColor based on the known color name.</returns>
         public static HSBColor FromName(string colorName)
         {
             colorName = colorName.ToLower();
@@ -248,6 +427,11 @@ namespace ColorRoseLib
             }
         }
 
+        /// <summary>
+        /// Returns a HSBColor from a color Hexcode.
+        /// </summary>
+        /// <param name="hexCode">A Hexcode. It can be in #RGB, #RRGGBB or in #AARRGGBB format.</param>
+        /// <returns>A new HSBColor based on the Hexcode.</returns>
         public static HSBColor FromHexCode(string hexCode)
         {
             if (hexCode[0] != '#')
@@ -290,69 +474,128 @@ namespace ColorRoseLib
             return val;
         }
 
-        public byte[] ToARGB()
+        private int SetSecondarySpectrum(int sector)
         {
-            byte[] channels = { 0, 0, 0 };
-            int quadrant = Hue / 120;
-            int spectrum = Hue - quadrant * 120;
+            int[] limits = { 60, 180, 300 };
+            if (limits.Contains(Hue))
+                return 60;
 
-            double[] x = new double[2];
-            x[0] = 1 - (double)spectrum / 120;
-            x[1] = (double)spectrum / 120;
+            return Hue - (sector * 60);
+        }
 
-            double xMax = x.Max();
-            double coefficient = 255 / xMax;
-
-            channels[quadrant > 2 ? 0 : quadrant] = (byte)(x[0] * coefficient);
-            channels[quadrant >= 2 ? 0 : quadrant+1] = (byte)(x[1] * coefficient);
-
-            double brightnessCoefficient = (double)Brightness / 100;
-            channels[0] = (byte)Math.Round(channels[0] * brightnessCoefficient);
-            channels[1] = (byte)Math.Round(channels[1] * brightnessCoefficient);
-            channels[2] = (byte)Math.Round(channels[2] * brightnessCoefficient);
-
-            double brightnessRatio = 255 * Brightness / 100;
-            double saturationRatio = 255 * (100 - Saturation) / 100;
-            if (saturationRatio > brightnessRatio)
-                saturationRatio = brightnessRatio;
-
-            for (int i = 0; i < channels.Length; i++)
-                if (channels[i] < saturationRatio)
-                    channels[i] = (byte)Math.Round(saturationRatio);
-
-            Color color = Color.FromArgb(Opacity, channels[0], channels[1], channels[2]);
-            byte[] output = new byte[4] { color.A, color.R, color.G, color.B };
+        private byte SetSecondarySpectrumByte(int spectrum)
+        {
+            double byteStep = (double)byte.MaxValue / 60.0;
+            byte output = (byte)Math.Round(spectrum * byteStep, MidpointRounding.AwayFromZero);
 
             return output;
         }
 
+        private byte SetChannelBrightnessByte(byte channel)
+        {
+            double brightnessCoefficient = (double)Brightness / 100.0;
+           
+            byte output = (byte)Math.Round(channel * brightnessCoefficient, MidpointRounding.AwayFromZero);
+
+            return output;
+        }
+
+        /// <summary>
+        /// Returns the byte channels of the color in ARGB format.
+        /// </summary>
+        /// <returns>Returns a byte[] that contains the ARGB channels of a color.</returns>
+        public byte[] ToARGB()
+        {
+            byte[] channels = { 0, 0, 0 };
+            int sector = Hue / 60;
+            int secSpectrum = SetSecondarySpectrum(sector);
+            byte secByte = SetSecondarySpectrumByte(secSpectrum);
+
+            switch (sector)
+            {
+                // Red
+                case 0:
+                    channels[0] = byte.MaxValue;
+                    channels[1] = secByte;
+                    break;
+                case 5:
+                    channels[0] = byte.MaxValue;
+                    channels[2] = secByte == byte.MaxValue ? byte.MaxValue : (byte)(byte.MaxValue - secByte);
+                    break;
+                // Green
+                case 1:
+                    channels[1] = byte.MaxValue;
+                    channels[0] = secByte == byte.MaxValue ? byte.MaxValue : (byte)(byte.MaxValue - secByte);
+                    break;
+                case 2:
+                    channels[1] = byte.MaxValue;
+                    channels[2] = secByte;
+                    break;
+                // Blue
+                case 3:
+                    channels[2] = byte.MaxValue;
+                    channels[1] = secByte == byte.MaxValue ? byte.MaxValue : (byte)(byte.MaxValue - secByte);
+                    break;
+                case 4:
+                    channels[2] = byte.MaxValue;
+                    channels[0] = secByte;
+                    break;
+            }
+
+            channels[0] = SetChannelBrightnessByte(channels[0]);
+            channels[1] = SetChannelBrightnessByte(channels[1]);
+            channels[2] = SetChannelBrightnessByte(channels[2]);
+
+            byte[] output = new byte[4] { Opacity, channels[0], channels[1], channels[2] };
+
+            return output;
+        }
+
+        /// <summary>
+        /// Prints the RGB Hexcode of the color.
+        /// </summary>
+        /// <returns>Color Hexcode in #RRGGBB format.</returns>
         public string RGBHexCode()
         {
             byte[] channels = ToARGB();
-            Color color = Color.FromArgb(channels[0], channels[1], channels[2], channels[3]);
-            return $"#{color.R:x2}{color.G:x2}{color.B:x2}";
+            return $"#{channels[1]:x2}{channels[2]:x2}{channels[3]:x2}";
         }
 
+        /// <summary>
+        /// Prints the ARGB Hexcode of the color.
+        /// </summary>
+        /// <returns>Color Hexcode in #AARRGGBB format.</returns>
         public string ARGBHexCode()
         {
             byte[] channels = ToARGB();
-            Color color = Color.FromArgb(channels[0], channels[1], channels[2], channels[3]);
-            return $"#{color.A:x2}{color.R:x2}{color.G:x2}{color.B:x2}";
+            return $"#{channels[0]:x2}{channels[1]:x2}{channels[2]:x2}{channels[3]:x2}";
         }
 
-        public void Darken(byte val)
+        /// <summary>
+        /// Lowers the brightness of the HSBColor.
+        /// </summary>
+        /// <param name="value">Value by which the brightness of the color will be lowered</param>
+        public void Darken(byte value)
         {
-            Brightness -= val;
+            Brightness -= value;
         }
 
-        public void Brighten(byte val)
+        /// <summary>
+        /// Lowers the saturation of the HSBColor.
+        /// </summary>
+        /// <param name="value">Value by which the saturation of the color will be lowered.</param>
+        public void Desaturate(byte value)
         {
-            Saturation -= val;
+            Saturation -= value;
         }
 
-        public void SetOpacity(byte val)
+        /// <summary>
+        /// Changes the opacity of a HSBColor.
+        /// </summary>
+        /// <param name="val">New opacity value.</param>
+        public void SetOpacity(byte opacity)
         {
-            Opacity = val;
+            Opacity = opacity;
         }
     }
 }
