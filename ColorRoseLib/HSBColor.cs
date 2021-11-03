@@ -491,13 +491,24 @@ namespace ColorRoseLib
             return output;
         }
 
-        private byte SetChannelBrightnessByte(byte channel)
+        private byte CalculateBrightnessAndSaturation(byte channel)
         {
-            double brightnessCoefficient = (double)Brightness / 100.0;
-           
-            byte output = (byte)Math.Round(channel * brightnessCoefficient, MidpointRounding.AwayFromZero);
+            double brgRatio = (double)Brightness / 100.0;
+            byte maxChannelValue = (byte)Math.Round(byte.MaxValue * brgRatio, MidpointRounding.AwayFromZero);
 
-            return output;
+            double satRatio = (100.0 - (double)Saturation) / 100.0;
+            byte baseSat = (byte)Math.Round(byte.MaxValue * satRatio, MidpointRounding.AwayFromZero);
+            byte satDiff = (byte)Math.Round(channel * (1 - satRatio), MidpointRounding.AwayFromZero);
+
+            byte baseChannel = baseSat > channel ? baseSat : channel;
+            byte brgDiff = (byte)Math.Round(baseChannel * (1 - brgRatio), MidpointRounding.AwayFromZero);
+            
+            byte channelSum = (byte)(baseSat + satDiff - brgDiff);
+
+            if (channelSum > maxChannelValue)
+                channelSum = maxChannelValue;
+
+            return channelSum;
         }
 
         /// <summary>
@@ -542,9 +553,8 @@ namespace ColorRoseLib
                     break;
             }
 
-            channels[0] = SetChannelBrightnessByte(channels[0]);
-            channels[1] = SetChannelBrightnessByte(channels[1]);
-            channels[2] = SetChannelBrightnessByte(channels[2]);
+            for (int i = 0; i < 3; i++)
+                channels[i] = CalculateBrightnessAndSaturation(channels[i]);
 
             byte[] output = new byte[4] { Opacity, channels[0], channels[1], channels[2] };
 
