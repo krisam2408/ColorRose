@@ -9,7 +9,7 @@ namespace ColorRoseLib
     /// </summary>
     public struct HSBColor
     {
-        private int hue;
+        private int m_hue;
         /// <summary>
         /// Determines the tint of the color.
         /// 0º -> Red.
@@ -19,61 +19,61 @@ namespace ColorRoseLib
         /// </summary>
         public int Hue
         {
-            get { return hue; }
-            set { hue = SetHue(value); }
+            get { return m_hue; }
+            set { m_hue = SetHue(value); }
         }
 
-        private byte saturation;
+        private byte m_saturation;
         /// <summary>
         /// Determines the richness of the color, varying from white to degrees of gray until the defined color by hue.
         /// </summary>
         public byte Saturation
         {
-            get { return saturation; }
+            get { return m_saturation; }
             set
             {
                 if (value >= MinSaturation && value <= MaxSaturation)
-                    saturation = value;
+                    m_saturation = value;
                 if (value < MinSaturation)
-                    saturation = MinSaturation;
+                    m_saturation = MinSaturation;
                 if (value > MaxSaturation)
-                    saturation = MaxSaturation;
+                    m_saturation = MaxSaturation;
             }
         }
 
-        private byte brightness;
+        private byte m_brightness;
         /// <summary>
         /// Determines how bright the color is, varying from black to the defined color by hue.
         /// </summary>
         public byte Brightness
         {
-            get { return brightness; }
+            get { return m_brightness; }
             set
             {
                 if (value >= MinBrightness && value <= MaxBrightness)
-                    brightness = value;
+                    m_brightness = value;
                 if (value < MinBrightness)
-                    brightness = MinBrightness;
+                    m_brightness = MinBrightness;
                 if (value > MaxBrightness)
-                    brightness = MaxBrightness;
+                    m_brightness = MaxBrightness;
             }
         }
 
-        private byte opacity;
+        private byte m_opacity;
         /// <summary>
         /// Determines how opaque the color is, varying from transparent to a full opaque color.
         /// </summary>
         public byte Opacity
         {
-            get { return opacity; }
+            get { return m_opacity; }
             set
             {
                 if (value >= MinOpacity && value <= MaxOpacity)
-                    opacity = value;
+                    m_opacity = value;
                 if (value < MinOpacity)
-                    opacity = MinOpacity;
+                    m_opacity = MinOpacity;
                 if (value > MaxOpacity)
-                    opacity = MaxOpacity;
+                    m_opacity = MaxOpacity;
             }
         }
 
@@ -250,10 +250,10 @@ namespace ColorRoseLib
         /// <param name="opacity">Opacity value.</param>
         public HSBColor(int hue, byte saturation, byte brightness, byte opacity)
         {
-            this.hue = 0;
-            this.saturation = 0;
-            this.brightness = 0;
-            this.opacity = 0;
+            this.m_hue = 0;
+            this.m_saturation = 0;
+            this.m_brightness = 0;
+            this.m_opacity = 0;
             Hue = hue;
             Saturation = saturation;
             Brightness = brightness;
@@ -358,73 +358,41 @@ namespace ColorRoseLib
         {
             colorName = colorName.ToLower();
 
-            switch(colorName)
+            return colorName switch
             {
-                case "red":
-                    return Red;
-                case "orange":
-                    return Orange;
-                case "yellow":
-                    return Yellow;
-                case "lime":
-                    return Lime;
-                case "green":
-                    return Green;
-                case "aqua":
-                    return Aqua;
-                case "cyan":
-                    return Cyan;
-                case "indigo":
-                    return Indigo;
-                case "blue":
-                    return Blue;
-                case "purple":
-                    return Purple;
-                case "magenta":
-                    return Magenta;
-                case "rose":
-                    return Rose;
-                case "white":
-                    return White;
-                case "black":
-                    return Black;
-                case "darkgray":
-                    return DarkGray;
-                case "lightgray":
-                    return LightGray;
-                case "transparent":
-                    return Transparent;
-                case "rosedark":
-                    return RoseDark;
-                case "rosegray":
-                    return RoseGray;
-                case "roselight":
-                    return RoseLight;
-                case "rosedarklight":
-                    return RoseDarkLight;
-                case "roseblue":
-                    return RoseBlue;
-                case "roseindigo":
-                    return RoseIndigo;
-                case "rosepurple":
-                    return RosePurple;
-                case "roserose":
-                    return RoseRose;
-                case "rosered":
-                    return RoseRed;
-                case "roseorange":
-                    return RoseOrange;
-                case "roseyellow":
-                    return RoseYellow;
-                case "rosegreen":
-                    return RoseGreen;
-                case "roseteal":
-                    return RoseTeal;
-                case "rosecyan":
-                    return RoseCyan;
-                default:
-                    throw new NotValidColorException(nameof(colorName));
-            }
+                "red" => Red,
+                "orange" => Orange,
+                "yellow" => Yellow,
+                "lime" => Lime,
+                "green" => Green,
+                "aqua" => Aqua,
+                "cyan" => Cyan,
+                "indigo" => Indigo,
+                "blue" => Blue,
+                "purple" => Purple,
+                "magenta" => Magenta,
+                "rose" => Rose,
+                "white" => White,
+                "black" => Black,
+                "darkgray" => DarkGray,
+                "lightgray" => LightGray,
+                "transparent" => Transparent,
+                "rosedark" => RoseDark,
+                "rosegray" => RoseGray,
+                "roselight" => RoseLight,
+                "rosedarklight" => RoseDarkLight,
+                "roseblue" => RoseBlue,
+                "roseindigo" => RoseIndigo,
+                "rosepurple" => RosePurple,
+                "roserose" => RoseRose,
+                "rosered" => RoseRed,
+                "roseorange" => RoseOrange,
+                "roseyellow" => RoseYellow,
+                "rosegreen" => RoseGreen,
+                "roseteal" => RoseTeal,
+                "rosecyan" => RoseCyan,
+                _ => throw new NotValidColorException(nameof(colorName)),
+            };
         }
 
         /// <summary>
@@ -465,7 +433,7 @@ namespace ColorRoseLib
             }
         }
 
-        private int SetHue(int val)
+        private static int SetHue(int val)
         {
             while (val < MinHue)
                 val += MaxHue;
@@ -483,7 +451,7 @@ namespace ColorRoseLib
             return Hue - (sector * 60);
         }
 
-        private byte SetSecondarySpectrumByte(int spectrum)
+        private static byte SetSecondarySpectrumByte(int spectrum)
         {
             double byteStep = (double)byte.MaxValue / 60.0;
             byte output = (byte)Math.Round(spectrum * byteStep, MidpointRounding.AwayFromZero);
